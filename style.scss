@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #0d1117;
+}
+
+.container {
+    //max-width: 1024px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+
+    .keyboard {
+        width: 770px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        background-color: #181818;
+        padding: 10px;
+
+        .key {
+            color: #c9d1d9;
+            display: flex;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            transition: 0.1s ease-in;
+
+            &.active {
+                color: #362e26;
+                background-color: #f2eee8;
+                transition: 0.15s ease-in;
+            }
+
+            &-backspace {
+                width: 100px;
+            }
+
+            &-tab {
+                width: 50px;
+            }
+
+            &-del {
+                width: 44px;
+            }
+
+            &-capsLock {
+                width: 100px;
+            }
+
+            &-enter {
+                width: 90px;
+            }
+
+            &-shift {
+                width: 100px;
+            }
+
+            &-shiftr {
+                width: 90px;
+            }
+
+            &-space {
+                width: 350px;
+            }
+        }
+    }
+}

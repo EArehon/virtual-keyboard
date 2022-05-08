@@ -471,6 +471,7 @@ document.body.insertAdjacentHTML('afterbegin', `<div class="container">
 let keyboard = document.querySelector('.keyboard');
 let currentLang = "ru";
 let shift = false;
+let shiftPress = false;
 
 const textArea = document.querySelector('.textarea');
 
@@ -492,20 +493,6 @@ function changeKeyboard (lang) {
         }
     }
 }
-
-
-document.querySelectorAll(`[data-button='ShiftRight'], [data-button='ShiftLeft']`).forEach(el => el.addEventListener('mousedown', function() {
-    checkShift();
-}));
-
-
-
-
-
-
-
-
-
 
 keyboard.addEventListener('mousedown', function(event) {
     let key = event.target;
@@ -530,8 +517,17 @@ document.addEventListener('keydown', function(event) {
     event.preventDefault();
     let key = document.querySelector(`[data-button='${event.code}']`);
     if(key){
-        key.classList.add('active');
-        switchKey(key);
+        if((key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') && shiftPress) {
+
+        }
+        else {
+            key.classList.add('active');
+            switchKey(key);
+        }
+    }
+
+    if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
+        shiftPress = true;
     }
   });
 
@@ -543,6 +539,7 @@ document.addEventListener('keyup', function(event) {
 
     if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
         shift = false;
+        shiftPress = false;
         changeKeyboard('ru');
     }
   });
@@ -566,22 +563,33 @@ function switchKey (key) {
             break;
 
         case 'ShiftLeft':
-            if (!shift) {
-                changeKeyboard('RU');
-            }
+                if (!shift) {
+                    shift = true;
+                    changeKeyboard("RU");
+                }
+                else {
+                    shift = false;
+                    changeKeyboard('ru');
+                }
             break;
         
         case 'ShiftRight':
             if (!shift) {
-                changeKeyboard('RU');
+                shift = true;
+                changeKeyboard("RU");
             }
-            break;
-    
+            else {
+                shift = false;
+                changeKeyboard('ru');
+            }
+        break;
+        
         default:
             insertText(key.innerHTML)
             break;
     }
 }
+
 
 //delete text from textarea at cursor position
 function deleteText(direction) {
@@ -591,10 +599,12 @@ function deleteText(direction) {
     let finText = textArea.value.substring(0, start) + textArea.value.substring(end);
     textArea.value = finText;
     textArea.selectionEnd = direction === 'next' ? end-1 : start;
-    if (shift) {
+    
+    if (!shiftPress && shift) {
         shift = false;
         changeKeyboard("ru");
     }
+    
     textArea.focus();
 }
 
@@ -604,21 +614,12 @@ function insertText(text) {
     let end = textArea.selectionEnd;
     let finText = textArea.value.substring(0, start) + text + textArea.value.substring(end);
     textArea.value = finText;
-    if (shift) {
+    
+    if (!shiftPress && shift) {
         shift = false;
         changeKeyboard("ru");
     }
+    
     textArea.focus();
     textArea.selectionEnd = ( start == end )? (end + text.length) : end ;
-}
-
-function checkShift() {
-    if (shift){
-        changeKeyboard('ru');
-        shift = false;
-    }
-    else {
-        changeKeyboard('RU');
-        shift = true;
-    }
 }

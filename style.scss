@@ -9,10 +9,28 @@ body {
 }
 
 .container {
-    //max-width: 1024px;
+    max-width: 1024px;
     margin: 0 auto;
+    margin-top: 150px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    .textarea {
+        width: 770px;
+        height: 200px;
+        resize: none;
+        outline: none;
+        border: 1px solid #30363d;
+        background-color: #0d1117;
+        color: #c9d1d9;
+        padding: 10px;
+
+        &:focus {
+            border-color: #58a6ff;
+        }
+    }
 
     .keyboard {
         width: 770px;
@@ -31,43 +49,45 @@ body {
             align-items: center;
             background-color: #0d1117;
             border: 1px solid #30363d;
-            transition: 0.1s ease-in;
+            transition: 0.20s ease-in;
+
+            &:hover{
+                background-color: #535c6b;
+                cursor: pointer;
+                transition: 0.05s ease-in;
+            }
 
             &.active {
                 color: #362e26;
                 background-color: #f2eee8;
-                transition: 0.15s ease-in;
+                transition: 0.05s ease-in;
             }
 
-            &-backspace {
+            &-Backspace {
                 width: 100px;
             }
 
-            &-tab {
+            &-Tab {
                 width: 50px;
             }
 
-            &-del {
-                width: 44px;
-            }
-
-            &-capsLock {
+            &-CapsLock {
                 width: 100px;
             }
 
-            &-enter {
+            &-Enter {
                 width: 90px;
             }
 
-            &-shift {
+            &-ShiftLeft {
                 width: 100px;
             }
 
-            &-shiftr {
+            &-ShiftRight {
                 width: 90px;
             }
 
-            &-space {
+            &-Space {
                 width: 350px;
             }
         }

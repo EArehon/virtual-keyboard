@@ -9,9 +9,26 @@ body {
 }
 
 .container {
+  max-width: 1024px;
   margin: 0 auto;
+  margin-top: 150px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+.container .textarea {
+  width: 770px;
+  height: 200px;
+  resize: none;
+  outline: none;
+  border: 1px solid #30363d;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  padding: 10px;
+}
+.container .textarea:focus {
+  border-color: #58a6ff;
 }
 .container .keyboard {
   width: 770px;
@@ -30,34 +47,36 @@ body {
   align-items: center;
   background-color: #0d1117;
   border: 1px solid #30363d;
-  transition: 0.1s ease-in;
+  transition: 0.2s ease-in;
+}
+.container .keyboard .key:hover {
+  background-color: #535c6b;
+  cursor: pointer;
+  transition: 0.05s ease-in;
 }
 .container .keyboard .key.active {
   color: #362e26;
   background-color: #f2eee8;
-  transition: 0.15s ease-in;
+  transition: 0.05s ease-in;
 }
-.container .keyboard .key-backspace {
+.container .keyboard .key-Backspace {
   width: 100px;
 }
-.container .keyboard .key-tab {
+.container .keyboard .key-Tab {
   width: 50px;
 }
-.container .keyboard .key-del {
-  width: 44px;
-}
-.container .keyboard .key-capsLock {
+.container .keyboard .key-CapsLock {
   width: 100px;
 }
-.container .keyboard .key-enter {
+.container .keyboard .key-Enter {
   width: 90px;
 }
-.container .keyboard .key-shift {
+.container .keyboard .key-ShiftLeft {
   width: 100px;
 }
-.container .keyboard .key-shiftr {
+.container .keyboard .key-ShiftRight {
   width: 90px;
 }
-.container .keyboard .key-space {
+.container .keyboard .key-Space {
   width: 350px;
 }

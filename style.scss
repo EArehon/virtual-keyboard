@@ -73,6 +73,12 @@ body {
 
             &-CapsLock {
                 width: 100px;
+
+                &.backlight {
+                    color: #362e26;
+                    background-color: #f2eee8;
+                    transition: 0.05s ease-in;
+                }
             }
 
             &-Enter {

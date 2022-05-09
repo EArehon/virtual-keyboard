@@ -68,6 +68,11 @@ body {
 .container .keyboard .key-CapsLock {
   width: 100px;
 }
+.container .keyboard .key-CapsLock.backlight {
+  color: #362e26;
+  background-color: #f2eee8;
+  transition: 0.05s ease-in;
+}
 .container .keyboard .key-Enter {
   width: 90px;
 }

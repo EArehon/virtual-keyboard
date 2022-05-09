@@ -472,6 +472,7 @@ let keyboard = document.querySelector('.keyboard');
 let currentLang = "ru";
 let shift = false;
 let shiftPress = false;
+let caps = false;
 
 const textArea = document.querySelector('.textarea');
 
@@ -525,10 +526,13 @@ document.addEventListener('keydown', function(event) {
             switchKey(key);
         }
     }
-
-    if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
-        shiftPress = true;
+    
+    if(key) {
+        if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
+            shiftPress = true;
+        }
     }
+    
   });
 
 document.addEventListener('keyup', function(event) {
@@ -537,10 +541,15 @@ document.addEventListener('keyup', function(event) {
         key.classList.remove('active');
     }
 
-    if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
-        shift = false;
-        shiftPress = false;
-        changeKeyboard('ru');
+    if(key){
+        if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
+            shift = false;
+            shiftPress = false;
+            changeKeyboard(currentLang);
+            if (caps) {
+                changeCaps(caps);
+            }
+        }
     }
   });
 
@@ -563,33 +572,71 @@ function switchKey (key) {
             break;
 
         case 'ShiftLeft':
-                if (!shift) {
-                    shift = true;
-                    changeKeyboard("RU");
+            if (!shift) {
+                shift = true;
+                changeKeyboard(currentLang.toUpperCase());
+                if (caps) {
+                    changeCaps(false);
                 }
-                else {
-                    shift = false;
-                    changeKeyboard('ru');
+            }
+            else {
+                shift = false;
+                changeKeyboard(currentLang);
+                if (caps) {
+                    changeCaps(true);
                 }
+            }
             break;
         
         case 'ShiftRight':
             if (!shift) {
                 shift = true;
-                changeKeyboard("RU");
+                changeKeyboard(currentLang.toUpperCase());
+                if (caps) {
+                    changeCaps(false);
+                }
             }
             else {
                 shift = false;
-                changeKeyboard('ru');
+                changeKeyboard(currentLang);
+                if (caps) {
+                    changeCaps(true);
+                }
             }
         break;
-        
+
+        case 'CapsLock':
+            checkCaps();
+            break;
+
         default:
             insertText(key.innerHTML)
             break;
     }
 }
 
+
+function checkCaps () {
+    let caspsLock = document.querySelector(`[data-button='CapsLock']`);
+    caspsLock.classList.toggle('backlight');
+    caps = caps ? false : true;
+    
+    shift ? changeCaps(!caps) : changeCaps(caps); 
+}
+
+function changeCaps (state) {
+    const re = new RegExp("[а-яА-ЯёЁa-zA-Z]{1}");
+    document.querySelectorAll('.key').forEach(el => {
+        if (el.textContent.length == 1 && re.test(el.textContent)) {
+            if (state) {
+                el.textContent = el.textContent.toUpperCase();
+            }
+            else {
+                el.textContent = el.textContent.toLowerCase();
+            }
+        }
+    });
+}
 
 //delete text from textarea at cursor position
 function deleteText(direction) {
@@ -602,7 +649,7 @@ function deleteText(direction) {
     
     if (!shiftPress && shift) {
         shift = false;
-        changeKeyboard("ru");
+        changeKeyboard(currentLang);
     }
     
     textArea.focus();
@@ -617,7 +664,7 @@ function insertText(text) {
     
     if (!shiftPress && shift) {
         shift = false;
-        changeKeyboard("ru");
+        changeKeyboard(currentLang);
     }
     
     textArea.focus();

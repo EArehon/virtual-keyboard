@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #0d1117;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 1024px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container h1 {
+  color: #c9d1d9;
+}
+.container p {
+  color: #c9d1d9;
+  margin-top: 15px;
+  font-size: 15px;
+}
+.container .textarea {
+  margin-top: 30px;
+  width: 770px;
+  height: 200px;
+  resize: none;
+  outline: none;
+  border: 1px solid #30363d;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  padding: 10px;
+  font-size: 18px;
+}
+.container .textarea:focus {
+  border-color: #58a6ff;
+}
+.container .keyboard {
+  width: 770px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background-color: #181818;
+  padding: 10px;
+}
+.container .keyboard .key {
+  color: #c9d1d9;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  transition: 0.2s ease-in;
+}
+.container .keyboard .key:hover {
+  background-color: #535c6b;
+  cursor: pointer;
+  transition: 0.05s ease-in;
+}
+.container .keyboard .key.active {
+  color: #362e26;
+  background-color: #f2eee8;
+  transition: 0.05s ease-in;
+}
+.container .keyboard .key-Backspace {
+  width: 100px;
+}
+.container .keyboard .key-Tab {
+  width: 50px;
+}
+.container .keyboard .key-CapsLock {
+  width: 100px;
+}
+.container .keyboard .key-CapsLock.backlight {
+  color: #362e26;
+  background-color: #f2eee8;
+  transition: 0.05s ease-in;
+}
+.container .keyboard .key-AltLeft.backlight {
+  color: #362e26;
+  background-color: #f2eee8;
+  transition: 0.05s ease-in;
+}
+.container .keyboard .key-ControlLeft.backlight {
+  color: #362e26;
+  background-color: #f2eee8;
+  transition: 0.05s ease-in;
+}
+.container .keyboard .key-Enter {
+  width: 90px;
+}
+.container .keyboard .key-ShiftLeft {
+  width: 100px;
+}
+.container .keyboard .key-ShiftRight {
+  width: 90px;
+}
+.container .keyboard .key-Space {
+  width: 350px;
+}

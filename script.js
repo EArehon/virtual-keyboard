@@ -473,8 +473,12 @@ let currentLang = "ru";
 let shift = false;
 let shiftPress = false;
 let caps = false;
+let flagLang = true;
 
 const textArea = document.querySelector('.textarea');
+
+
+
 
 for (key of keys) {
     let button;
@@ -487,6 +491,8 @@ for (key of keys) {
     keyboard.insertAdjacentHTML('beforeend', button);
 }
 
+
+
 function changeKeyboard (lang) {
     for (key of keys) {
         if (key.multi) {
@@ -495,12 +501,22 @@ function changeKeyboard (lang) {
     }
 }
 
+
+
+
+
+
+
 keyboard.addEventListener('mousedown', function(event) {
     let key = event.target;
     if(key.classList.contains('key')) {
         key.classList.add('active');
         switchKey(key);
+
+        checkAltCtrl(key);
     }
+
+
 });
 
 keyboard.addEventListener('mouseup', function() {
@@ -509,7 +525,42 @@ keyboard.addEventListener('mouseup', function() {
 })
 
 
+let ctrlFlag = false;
+let altFlag = false;
+let ff = false;
 
+function checkAltCtrl(key) {
+    if (ff) {
+        if (key.dataset.button == "AltLeft" && ctrlFlag || key.dataset.button == "ControlLeft" && altFlag) {
+            if (currentLang == "ru") {
+                currentLang = 'en';
+                changeKeyboard('en');
+            }
+            else {
+                currentLang = 'ru';
+                changeKeyboard('ru');
+            }
+            //changeCaps(caps);
+        }
+        ctrlFlag = false;
+        altFlag = false;
+        ff = false;
+        console.log(ctrlFlag, altFlag, ff);
+    }
+    else {
+        if (key.dataset.button == "AltLeft") {
+            key.classList.add('backlight');
+            console.log('alt');
+            altFlag = true;
+        }
+        if (key.dataset.button == "ControlLeft") {
+            key.classList.add('backlight');
+            console.log('ctrl');
+            ctrlFlag = true;
+        }
+        ff = true;
+    }
+}
 
 
 
@@ -526,13 +577,27 @@ document.addEventListener('keydown', function(event) {
             switchKey(key);
         }
     }
+
+    if (event.ctrlKey && event.altKey && flagLang) {
+        flagLang = false;
+        if (currentLang == "ru") {
+            currentLang = 'en';
+            changeKeyboard('en');
+        }
+        else {
+            currentLang = 'ru';
+            changeKeyboard('ru');
+        }
+        changeCaps(caps);
+        
+
+    }
     
     if(key) {
         if (key.dataset.button == 'ShiftLeft' || key.dataset.button == 'ShiftRight') {
             shiftPress = true;
         }
     }
-    
   });
 
 document.addEventListener('keyup', function(event) {
@@ -550,6 +615,7 @@ document.addEventListener('keyup', function(event) {
                 changeCaps(caps);
             }
         }
+        flagLang = true;
     }
   });
 
@@ -608,6 +674,21 @@ function switchKey (key) {
         case 'CapsLock':
             checkCaps();
             break;
+        
+        case 'ControlLeft':
+            break;
+        
+        case 'AltLeft':
+            break;
+        
+        case 'AltRight':
+            break;
+        
+        case 'ControlRight':
+            break;
+
+        case 'MetaLeft':
+            break;
 
         default:
             insertText(key.innerHTML)
@@ -650,6 +731,7 @@ function deleteText(direction) {
     if (!shiftPress && shift) {
         shift = false;
         changeKeyboard(currentLang);
+        changeCaps(caps);
     }
     
     textArea.focus();
@@ -665,6 +747,7 @@ function insertText(text) {
     if (!shiftPress && shift) {
         shift = false;
         changeKeyboard(currentLang);
+        changeCaps(caps);
     }
     
     textArea.focus();
